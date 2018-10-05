@@ -43,6 +43,7 @@ else
          echo $result
          docker exec -u root -i frappe bash -c "echo ${result} | tee --append /etc/hosts"
          docker exec -itu root frappe bash -c "printf '# User rules for frappe\nfrappe ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/frappe"
+         sudo su -c 'echo $result >> /etc/hosts'
          ;;
       \?)
         echo "Invalid option: -$OPTARG" >&2
