@@ -8,8 +8,9 @@ services:
   - docker
 
 install:
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   - chmod ugo+x ./dbench
-  - ./dbench setup docker
+  - docker-compose -f docker-compose.armv7hf.yml up -d
   - ./dbench init frappe-bench
   - ./dbench new-site site1.local
   - sudo ./dbench setup hosts
