@@ -30,5 +30,8 @@ RUN pip install -e bench-repo && rm -rf ~/.cache/pip \
   && npm install -g yarn \
   && chown -R frappe:frappe /home/frappe/*
 
+ADD ./docker-entrypoint.sh /usr/bin/entrypoint
+RUN chmod ugo+x /usr/bin/entrypoint
+
 USER frappe
 WORKDIR /home/frappe/frappe-bench
