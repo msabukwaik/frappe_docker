@@ -46,8 +46,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 - `./dbench`: Launches you into an interactive shell in the container as user frappe
 
-- `./dbench init [ bench-folder-name ]`: Runs "bench init" along with some other commands
-
 - `./dbench setup docker [ stop | down ]`: Starts and builds the docker containers using `docker-compose up -d`
 
 - `./dbench setup hosts`: Adds all sites to the containers hosts file.  
