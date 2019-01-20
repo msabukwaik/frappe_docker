@@ -2,11 +2,7 @@
 
 [![Build Status](https://travis-ci.org/frappe/frappe_docker.svg?branch=master)](https://travis-ci.org/frappe/frappe_docker)
 
-- [Docker](https://docker.com/) is an open source project to pack, ship and run any Linux application in a lighter weight, faster container than a traditional virtual machine.
-
-- Docker makes it much easier to deploy [frappe](https://github.com/frappe/frappe) on your servers.
-
-- This container uses [bench](https://github.com/frappe/bench) to install frappe.
+This is a repo designed to aide setting up frappe/ERPNext on docker.
 
 ## Getting Started
 
