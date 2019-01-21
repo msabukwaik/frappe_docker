@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.7'
 services:
   mariadb:
     image: mariadb
@@ -14,6 +14,9 @@ services:
     ports:
       - "3307:3306" #mariadb-port
     
+    networks:
+      frappe:
+
     container_name: mariadb
 
   redis-cache:
@@ -21,6 +24,9 @@ services:
 
     volumes:
       - ./conf/redis-conf.d:/etc/conf.d
+
+    networks:
+      - frappe
 
     command: ["redis-server","/etc/conf.d/redis_cache.conf"]
 
@@ -32,6 +38,9 @@ services:
     volumes:
       - ./conf/redis-conf.d:/etc/conf.d
 
+    networks:
+      - frappe
+
     command: ["redis-server","/etc/conf.d/redis_queue.conf"]
 
     container_name: redis-queue
@@ -41,6 +50,9 @@ services:
 
     volumes:
       - ./conf/redis-conf.d:/etc/conf.d
+
+    networks:
+      - frappe
 
     command: ["redis-server","/etc/conf.d/redis_socketio.conf"]
 
@@ -60,14 +72,16 @@ services:
       - "6787:6787" #file_watcher_port
     stdin_open: true
     tty: true
-    links:
-      - redis-cache
-      - redis-queue
-      - redis-socketio
-      - mariadb
     depends_on:
       - mariadb
       - redis-cache
       - redis-queue
       - redis-socketio
+
+    networks:
+      - frappe
+          
     container_name: frappe
+
+networks:
+  frappe:

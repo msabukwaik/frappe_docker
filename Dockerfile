@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y iputils-ping git build-essential python
   wget libmysqlclient-dev mariadb-client mariadb-common curl rlwrap redis-tools nano wkhtmltopdf python-pip vim sudo && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 RUN pip install --upgrade setuptools pip && rm -rf ~/.cache/pip
-RUN useradd -ms /bin/bash -G sudo frappe && printf '# User rules for frappe\nfrappe ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/frappe
+RUN useradd -ms /bin/bash -G sudo frappe && printf '# Sudo rules for frappe\nfrappe ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/frappe
 
 #nodejs
 RUN curl https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.10.0-1nodesource1_amd64.deb > node.deb \
