@@ -58,9 +58,9 @@ services:
     build: .
     volumes:
       - ./frappe-bench:/home/frappe/frappe-bench
-      - ./conf/redis-conf.d/redis_cache.conf:./conf/redis-conf.d/redis_cache.conf
-      - ./conf/redis-conf.d/redis_socketio.conf:./conf/redis-conf.d/redis_queue.conf
-      - ./conf/redis-conf.d/redis_socketio.conf:./conf/redis-conf.d/redis_socketio.conf
+      - ./conf/redis-conf/redis_cache.conf:/home/frappe/frappe-bench/config/redis_cache.conf
+      - ./conf/redis-conf.d/redis_socketio.conf:/home/frappe/frappe-bench/config/redis_queue.conf
+      - ./conf/redis-conf.d/redis_socketio.conf:/home/frappe/frappe-bench/config/redis_socketio.conf
     ports:
       - "8000:8000" # Webserver port
       - "9000:9000" # Socketio port
@@ -72,14 +72,6 @@ services:
       - redis-cache
       - redis-queue
       - redis-socketio
-
-    configs:
-      - source: redis-cache
-        target: c
-      - source: redis-queue
-        target: /home/frappe/frappe-bench/config/redis_queue.conf
-      - source: redis-socketio
-        target: /home/frappe/frappe-bench/config/redis_socketio.conf
 
     networks:
       - frappe
