@@ -3,6 +3,8 @@
 if [[ $# -eq 0 ]]; then
     docker exec -it frappe bash
 elif [ "$1" == 'init' ]; then
+    docker exec -itu root frappe bash -c "cat /home/frappe/frappe-bench/sites/common_site_config_docker.json"
+    docker exec -itu root frappe bash -c "cat /home/frappe/frappe-bench/Procfile_docker"
     docker exec -itu root frappe bash -c "chown -R frappe:frappe /home/frappe"
     docker exec -i frappe bash -c "cd .. && bench init frappe-bench --ignore-exist --skip-redis-config-generation && cd frappe-bench"
     docker exec -i frappe bash -c "mv Procfile_docker Procfile && mv sites/common_site_config_docker.json sites/common_site_config.json && bench set-mariadb-host mariadb"
