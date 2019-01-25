@@ -1,0 +1,102 @@
+version: '3.7'
+
+services:
+  mariadb:
+    image: mariadb
+
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_USER=root
+    
+    volumes:
+      - ./conf/mariadb-conf.d:/etc/mysql/conf.d
+      - /var/lib/mysql
+    
+    ports:
+      - "3307:3306" # Mariadb port
+    
+    networks:
+      frappe:
+
+
+  redis-cache:
+    image: redis:alpine
+
+    configs:
+      - source: redis-cache
+        target: /etc/conf.d/redis_cache.conf
+
+    networks:
+      - frappe
+
+    command: ["redis-server","/etc/conf.d/redis_cache.conf"]
+
+
+  redis-queue:
+    image: redis:alpine
+
+    configs:
+      - source: redis-queue
+        target: /etc/conf.d/redis_queue.conf
+
+    networks:
+      - frappe
+
+    command: ["redis-server","/etc/conf.d/redis_queue.conf"]
+
+
+  redis-socketio:
+    image: redis:alpine
+
+    configs:
+      - source: redis-socketio
+        target: /etc/conf.d/redis_socketio.conf
+
+    networks:
+      - frappe
+
+    command: ["redis-server","/etc/conf.d/redis_socketio.conf"]
+
+
+  frappe:
+    build: .
+
+    volumes:
+      - ./frappe-bench:/home/frappe/frappe-bench
+
+    ports:
+      - "8000:8000" # Webserver port
+      - "9000:9000" # Socketio port
+      - "6787:6787" # File Watcher port
+
+    stdin_open: true
+    tty: true
+
+    depends_on:
+      - mariadb
+      - redis-cache
+      - redis-queue
+      - redis-socketio
+
+    configs:
+      - source: redis-cache
+        target: /home/frappe/frappe-bench/config/redis_cache.conf
+      - source: redis-queue
+        target: /home/frappe/frappe-bench/config/redis_queue.conf
+      - source: redis-socketio
+        target: /home/frappe/frappe-bench/config/redis_socketio.conf
+
+    networks:
+      - frappe
+          
+
+networks:
+  frappe:
+
+configs:
+  redis-cache:
+    file: ./conf/redis-conf.d/redis_cache.conf
+  redis-queue:
+    file: ./conf/redis-conf.d/redis_queue.conf
+  redis-socketio:
+    file: ./conf/redis-conf.d/redis_socketio.conf
