@@ -35,7 +35,7 @@ function setup_config () {
     \"update_bench_on_update\": true,\n\
     \"webserver_port\": $WEBSERVER_PORT,\n\
     \"admin_password\": \"$ADMIN_PASSWORD\"\n\
-    }") > /home/frappe/frappe-bench/Procfile
+    }") > /home/frappe/frappe-bench/Procfile_docker
 
     cat <(echo "web: bench serve --port $WEBSERVER_PORT\n\
     \n\
@@ -45,8 +45,7 @@ function setup_config () {
     worker_short: bench worker --queue short\n\
     worker_long: bench worker --queue long\n\
     worker_default: bench worker --queue default\n\
-    ")\ > /home/frappe/frappe-bench/sites/common_site_config.json
-
+    ")\ > /home/frappe/frappe-bench/sites/common_site_config_docker.json
 }
 
 setup_config
