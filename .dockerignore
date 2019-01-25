@@ -1,0 +1,6 @@
+# frappe_docker .dockerignore file
+
+conf/*
+.travis.yml
+test.py
+dbench
