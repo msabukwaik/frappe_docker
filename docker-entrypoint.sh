@@ -49,3 +49,5 @@ function setup_config () {
 }
 
 setup_config
+
+tail -f /dev/null
