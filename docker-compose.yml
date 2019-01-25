@@ -79,6 +79,7 @@ services:
       - redis-cache
       - redis-queue
       - redis-socketio
+    
     environment:
       - MYSQL_ROOT_PASSWORD=1234
       - ADMIN_PASSQORD=admini
