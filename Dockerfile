@@ -1,7 +1,9 @@
 # Frappe Bench Dockerfile
 
-FROM ubuntu:16.04
+FROM resin/armv7hf-ubuntu:xenial
 LABEL author=frappé
+
+RUN [ "cross-build-start" ]
 
 # Generate locale C.UTF-8 for mariadb and general locale data
 ENV LANG C.UTF-8
@@ -18,7 +20,7 @@ RUN pip install --upgrade setuptools pip && rm -rf ~/.cache/pip
 RUN useradd -ms /bin/bash -G sudo frappe && printf '# Sudo rules for frappe\nfrappe ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/frappe
 
 # Install Node.js
-RUN curl https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.10.0-1nodesource1_amd64.deb > node.deb \
+RUN curl https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.10.0-1nodesource1_armhf.deb > node.deb \
  && dpkg -i node.deb \
  && rm node.deb
 
@@ -37,3 +39,5 @@ USER frappe
 # Add some bench files
 ADD --chown=frappe:frappe ./frappe-bench /home/frappe/frappe-bench
 WORKDIR /home/frappe/frappe-bench
+
+RUN [ "cross-build-end" ]

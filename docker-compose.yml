@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   mariadb:
-    image: mariadb
+    image: chabad360/mariadb-armhf
 
     environment:
       - MYSQL_ROOT_PASSWORD=123
@@ -19,7 +19,7 @@ services:
 
 
   redis-cache:
-    image: redis:alpine
+    image: arm32v7/redis:alpine
 
     volumes:
         -./conf/redis-conf.d:/etc/conf.d
@@ -30,7 +30,7 @@ services:
 
 
   redis-queue:
-    image: redis:alpine
+    image: arm32v7/redis:alpine
 
     volumes:
         -./conf/redis-conf.d:/etc/conf.d
@@ -41,7 +41,7 @@ services:
 
 
   redis-socketio:
-    image: redis:alpine
+    image: arm32v7/redis:alpine
 
     volumes:
         -./conf/redis-conf.d:/etc/conf.d
